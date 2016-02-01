@@ -18,8 +18,6 @@ type Tick struct {
     Volume int
 }
 
-// head AA_160127_160127.txt
-
 func parseDate(datePart, timePart string) time.Time {
     // Ignoring error returns is bad practice, but OK for prototyping with clean data
     year, _ := strconv.Atoi(datePart[:4])

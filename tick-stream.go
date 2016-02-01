@@ -1,28 +1,29 @@
 package main
 
 import (
+    "os"
     "fmt"
+    "io/ioutil"
+    "strings"
 
     "github.com/ceejsmith/tick-stream-go/parse"
 )
 
-var lines = []string {
-    "AA,0,20160127,093001,7.070000000,500",
-    "AA,0,20160127,093009,7.060000000,100",
-    "AA,0,20160127,093100,7.050000000,100",
-    "AA,0,20160127,093100,7.050000000,100",
-    "AA,0,20160127,093100,7.050000000,100",
-    "AA,0,20160127,093100,7.040000000,100",
-    "AA,0,20160127,093100,7.030000000,1000",
-    "AA,0,20160127,093100,7.030000000,100",
-    "AA,0,20160127,093101,7.050000000,100",
-    "AA,0,20160127,093118,7.040000000,100",
-}
-
 func main() {
-    fmt.Println("This is a microservice to stream financial price ticks.")
+    filename := os.Args[1]
 
-    for _, tick := range parse.Parse(lines) {
+    file, err := ioutil.ReadFile(filename)
+
+    if err != nil {
+        panic(fmt.Sprintf("Cannot open %s", filename))
+    }
+
+    lines := strings.Split(string(file), "\r\n")
+
+    fmt.Printf("Found %d lines\n", len(lines))
+
+    // Discard header and empty trailing line
+    for _, tick := range parse.Parse(lines[1:len(lines) - 1]) {
         fmt.Println(tick.Volume)
     }
 }
