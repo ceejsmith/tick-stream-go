@@ -18,6 +18,12 @@ func checkDate(expected []int, actual time.Time, t *testing.T) {
     if sec != expected[5] { t.Errorf("Expected second %d. Got: %d", expected[5], sec) }
 }
 
+func TestParseDate(t *testing.T) {
+    time := parseDate("20160127", "093101")
+
+    checkDate([]int { 2016, 1, 27, 9, 31, 1 }, time, t) 
+}
+
 func checkLine(expectedTicker string, expectedDate []int,  expectedLastPrice float64, expectedVolume int, tick Tick, t *testing.T) {
     if tick.Ticker != expectedTicker  { t.Errorf("Expected ticker as %s. Got: %s", expectedTicker, tick.Ticker) } 
 
@@ -25,12 +31,6 @@ func checkLine(expectedTicker string, expectedDate []int,  expectedLastPrice flo
     
     if tick.LastPrice != expectedLastPrice { t.Errorf("Expected last price as %f. Got: %f", expectedLastPrice, tick.LastPrice) }
     if tick.Volume != expectedVolume { t.Errorf("Expected volume as %d. Got %d", expectedVolume, tick.Volume) }
-}
-
-func TestParseDate(t *testing.T) {
-    time := parseDate("20160127", "093101")
-
-    checkDate([]int { 2016, 1, 27, 9, 31, 1 }, time, t) 
 }
 
 func TestParseLine(t *testing.T) {
