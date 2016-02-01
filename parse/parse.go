@@ -20,19 +20,6 @@ type Tick struct {
 
 // head AA_160127_160127.txt
 
-var lines = []string {
-    "AA,0,20160127,093001,7.070000000,500",
-    "AA,0,20160127,093009,7.060000000,100",
-    "AA,0,20160127,093100,7.050000000,100",
-    "AA,0,20160127,093100,7.050000000,100",
-    "AA,0,20160127,093100,7.050000000,100",
-    "AA,0,20160127,093100,7.040000000,100",
-    "AA,0,20160127,093100,7.030000000,1000",
-    "AA,0,20160127,093100,7.030000000,100",
-    "AA,0,20160127,093101,7.050000000,100",
-    "AA,0,20160127,093118,7.040000000,100",
-}
-
 func parseDate(datePart, timePart string) time.Time {
     // Ignoring error returns is bad practice, but OK for prototyping with clean data
     year, _ := strconv.Atoi(datePart[:4])
@@ -58,8 +45,8 @@ func parseLine(line string) Tick {
     }
 }
 
-func Parse() []Tick {
-    result := make([]Tick, 10)
+func Parse(lines []string) []Tick {
+    result := make([]Tick, len(lines))
     for i, line := range lines {
         result[i] = parseLine(line)
     }
