@@ -1,0 +1,14 @@
+<html>
+  <head></head>
+  <body>
+    <h1>Streaming ticks</h1>
+    <p>Volume: <span id="volume"></span></p>
+    <script>
+      var socket = new WebSocket("ws://localhost:12345/tick");
+      var volume = document.getElementById('volume');
+      socket.onmessage = function(e) {
+        volume.innerHTML = e.data;
+      };
+    </script>
+  </body>
+</html>
