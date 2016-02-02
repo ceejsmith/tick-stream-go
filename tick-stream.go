@@ -7,6 +7,7 @@ import (
     "strings"
 
     "github.com/ceejsmith/tick-stream-go/parse"
+    "github.com/ceejsmith/tick-stream-go/stream"
 )
 
 func main() {
@@ -23,7 +24,10 @@ func main() {
     fmt.Printf("Found %d lines\n", len(lines))
 
     // Discard header and empty trailing line
-    for _, tick := range parse.Parse(lines[1:len(lines) - 1]) {
-        fmt.Println(tick.Volume)
+    volumes := make([]string, len(lines) - 2)
+    for i, tick := range parse.Parse(lines[1:len(lines) - 1]) {
+        volumes[i] = fmt.Sprintf("%d", tick.Volume)
     }
+
+    stream.Strings(volumes)
 }
